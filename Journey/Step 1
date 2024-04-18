@@ -1,0 +1,14 @@
+
+
+    First things first
+- Create a game loop
+    -Create a time for the game
+- Display a player character
+- Control the player
+- Display background tiles
+- Display Objects
+
+    Then maybe some extensions
+    - NPCs
+    - Player's abilities
+    - Plot
