@@ -19,19 +19,16 @@ public class GamePanel extends JPanel implements Runnable{
 
     int FPS = 30;
 
-
     KeyControlCenter keyControlCenter = new KeyControlCenter();
     Thread gameThread;
     Player player = new Player(this, keyControlCenter);
 
     public GamePanel() {
-
         this.setPreferredSize(new Dimension(screenWidth, screenHeight)); // Set the wanted size of the panel
         this.setBackground(Color.black);
         this.setDoubleBuffered(true); //set this component to be double buffered
         this.addKeyListener(keyControlCenter);
         this.setFocusable(true); //make the gamePanel receive key input
-
     }
 
     public void startGameThread(){
@@ -41,10 +38,8 @@ public class GamePanel extends JPanel implements Runnable{
 
     @Override
     public void run() {
-
         double interval = (double) 1000000000 /FPS;
         double nextDrawTime = System.nanoTime() + interval;
-
 
         while(gameThread != null){
 
@@ -80,13 +75,8 @@ public class GamePanel extends JPanel implements Runnable{
     public void paintComponent(Graphics g){
 
         super.paintComponent(g);
-
         Graphics2D g2 = (Graphics2D)g;
-
         player.draw(g2);
-
-
-
 
         g2.dispose(); //dispose of this graphics context and release any system resources
     }
