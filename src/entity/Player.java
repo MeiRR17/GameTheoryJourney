@@ -2,14 +2,13 @@ package entity;
 
 import main.GamePanel;
 import main.KeyControlCenter;
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class Player extends Entity{
+public class Player extends Entity {
     GamePanel gamePanel;
     KeyControlCenter keyControlCenter;
 
@@ -21,6 +20,7 @@ public class Player extends Entity{
         setDefaultValue();
         getPlayerImage();
     }
+
     public void setDefaultValue() {
         x = 100;
         y = 100;
@@ -29,7 +29,6 @@ public class Player extends Entity{
     }
 
     public void getPlayerImage() {
-
         try {
             down_stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/front-stand.png")));
             down_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/front-walk.png")));
@@ -39,51 +38,52 @@ public class Player extends Entity{
             up_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/behind-walk.png")));
             up_move2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/behind-walk2.png")));
 
-            left_stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right-stand.png")));
-            left_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right-walk.png")));
-            left_move2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right-walk2.png")));
+            right_stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right-stand.png")));
+            right_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right-walk.png")));
+            right_move2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right-walk2.png")));
 
-            right_stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left-stand.png")));
-            right_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left-walk.png")));
-            right_move2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left-walk2.png")));
-
-
+            left_stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left-stand.png")));
+            left_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left-walk.png")));
+            left_move2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left-walk2.png")));
         }catch (IOException e){
             e.printStackTrace();
         }
     }
 
     public void update(){
-        if(keyControlCenter.pressUp) {
-            direction = "up";
-            y -= speed;
-        }
-        if(keyControlCenter.pressDown) {
-            direction = "down";
-            y += speed;
-        }
-        if(keyControlCenter.pressRight) {
-            direction = "right";
-            x += speed;
-        }
-        if(keyControlCenter.pressLeft) {
-            direction = "left";
-            x -= speed;
-        }
+        if(keyControlCenter.pressUp || keyControlCenter.pressDown || keyControlCenter.pressLeft || keyControlCenter.pressRight) {
+            if (keyControlCenter.pressUp) {
+                direction = "up";
+                y -= speed;
+            }
+            if (keyControlCenter.pressDown) {
+                direction = "down";
+                y += speed;
+            }
+            if (keyControlCenter.pressRight) {
+                direction = "right";
+                x += speed;
+            }
+            if (keyControlCenter.pressLeft) {
+                direction = "left";
+                x -= speed;
+            }
 
-        spriteCounter++;
-        if(spriteCounter > 10) {
-            if(spriteNum == 4){
-
+            spriteCounter++;
+            if (spriteCounter > 5) {
+                if (spriteNum == 4) {
+                    spriteNum = 1;
+                }
+                if (spriteNum == 3 || spriteNum == 2 || spriteNum == 1) {
+                    spriteNum++;
+                }
+                spriteCounter = 0;
             }
         }
     }
+
     public void draw(Graphics2D g2){
-//        g2.setColor(Color.CYAN);
-//        g2.fillRect(x, y, gamePanel.tileSize, gamePanel.tileSize);
-
         BufferedImage image = null;
-
         switch (direction) {
             case "up":
                 if(spriteNum == 1) {
@@ -104,7 +104,7 @@ public class Player extends Entity{
                     image = down_stand;
                 }
                 if(spriteNum == 2){
-                    image = down_stand;
+                    image = down_move;
                 }
                 if(spriteNum == 3){
                     image = down_stand;
@@ -132,17 +132,16 @@ public class Player extends Entity{
                     image = right_stand;
                 }
                 if(spriteNum == 2){
-                    image = right_move;
+                    image = right_move2;
                 }
                 if(spriteNum == 3){
                     image = right_stand;
                 }
                 if(spriteNum == 4){
-                    image = right_move2;
+                    image = right_move;
                 }
                 break;
         }
         g2.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
-
     }
 }
