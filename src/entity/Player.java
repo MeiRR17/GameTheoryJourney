@@ -3,7 +3,11 @@ package entity;
 import main.GamePanel;
 import main.KeyControlCenter;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.Objects;
 
 public class Player extends Entity{
     GamePanel gamePanel;
@@ -15,29 +19,130 @@ public class Player extends Entity{
         this.keyControlCenter = keyHandler;
 
         setDefaultValue();
+        getPlayerImage();
     }
     public void setDefaultValue() {
         x = 100;
         y = 100;
         speed = 4;
+        direction = "down";
     }
+
+    public void getPlayerImage() {
+
+        try {
+            down_stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/front-stand.png")));
+            down_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/front-walk.png")));
+            down_move2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/front-walk2.png")));
+
+            up_stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/behind-stand.png")));
+            up_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/behind-walk.png")));
+            up_move2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/behind-walk2.png")));
+
+            left_stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right-stand.png")));
+            left_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right-walk.png")));
+            left_move2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/right-walk2.png")));
+
+            right_stand = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left-stand.png")));
+            right_move = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left-walk.png")));
+            right_move2 = ImageIO.read(Objects.requireNonNull(getClass().getResourceAsStream("/player/left-walk2.png")));
+
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     public void update(){
         if(keyControlCenter.pressUp) {
+            direction = "up";
             y -= speed;
         }
         if(keyControlCenter.pressDown) {
+            direction = "down";
             y += speed;
         }
         if(keyControlCenter.pressRight) {
+            direction = "right";
             x += speed;
         }
         if(keyControlCenter.pressLeft) {
+            direction = "left";
             x -= speed;
+        }
+
+        spriteCounter++;
+        if(spriteCounter > 10) {
+            if(spriteNum == 4){
+
+            }
         }
     }
     public void draw(Graphics2D g2){
-        g2.setColor(Color.CYAN);
+//        g2.setColor(Color.CYAN);
+//        g2.fillRect(x, y, gamePanel.tileSize, gamePanel.tileSize);
 
-        g2.fillRect(x, y, gamePanel.tileSize, gamePanel.tileSize);
+        BufferedImage image = null;
+
+        switch (direction) {
+            case "up":
+                if(spriteNum == 1) {
+                    image = up_stand;
+                }
+                if(spriteNum == 2){
+                    image = up_move;
+                }
+                if(spriteNum == 3){
+                    image = up_stand;
+                }
+                if(spriteNum == 4){
+                    image = up_move2;
+                }
+                break;
+            case "down":
+                if(spriteNum == 1) {
+                    image = down_stand;
+                }
+                if(spriteNum == 2){
+                    image = down_stand;
+                }
+                if(spriteNum == 3){
+                    image = down_stand;
+                }
+                if(spriteNum == 4){
+                    image = down_move2;
+                }
+                break;
+            case "left":
+                if(spriteNum == 1) {
+                    image = left_stand;
+                }
+                if(spriteNum == 2){
+                    image = left_move;
+                }
+                if(spriteNum == 3){
+                    image = left_stand;
+                }
+                if(spriteNum == 4){
+                    image = left_move2;
+                }
+                break;
+            case "right":
+                if(spriteNum == 1) {
+                    image = right_stand;
+                }
+                if(spriteNum == 2){
+                    image = right_move;
+                }
+                if(spriteNum == 3){
+                    image = right_stand;
+                }
+                if(spriteNum == 4){
+                    image = right_move2;
+                }
+                break;
+        }
+        g2.drawImage(image, x, y, gamePanel.tileSize, gamePanel.tileSize, null);
+
     }
 }
