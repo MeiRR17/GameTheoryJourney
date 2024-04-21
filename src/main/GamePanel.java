@@ -64,7 +64,6 @@ public class GamePanel extends JPanel implements Runnable{
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
         }
     }
     public void update(){

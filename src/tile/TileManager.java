@@ -73,11 +73,7 @@ public class TileManager {
             }
             bufferedReader.close();
 
-
-        }catch (Exception ignored) {
-
-        }
-
+        }catch (Exception ignored) {}
     }
 
     public void  draw(Graphics2D g2){
@@ -101,7 +97,6 @@ public class TileManager {
                 row++;
                 y += gamePanel.tileSize;
             }
-
         }
     }
 }
