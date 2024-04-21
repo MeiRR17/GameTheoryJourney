@@ -52,33 +52,39 @@ public class Player extends Entity {
 
     public void update(){
         if(keyControlCenter.pressUp || keyControlCenter.pressDown || keyControlCenter.pressLeft || keyControlCenter.pressRight) {
-            if (keyControlCenter.pressUp) {
+            if (keyControlCenter.pressUp && !keyControlCenter.pressDown) {
                 direction = "up";
                 y -= speed;
             }
-            if (keyControlCenter.pressDown) {
+            if (keyControlCenter.pressDown && !keyControlCenter.pressUp) {
                 direction = "down";
                 y += speed;
             }
-            if (keyControlCenter.pressRight) {
+            if (keyControlCenter.pressRight && !keyControlCenter.pressLeft) {
                 direction = "right";
                 x += speed;
             }
-            if (keyControlCenter.pressLeft) {
+            if (keyControlCenter.pressLeft && !keyControlCenter.pressRight) {
                 direction = "left";
                 x -= speed;
             }
 
+
             spriteCounter++;
-            if (spriteCounter > 5) {
+            if (spriteCounter > 3) {
                 if (spriteNum == 4) {
                     spriteNum = 1;
                 }
                 if (spriteNum == 3 || spriteNum == 2 || spriteNum == 1) {
                     spriteNum++;
                 }
+                if(keyControlCenter.pressRight && keyControlCenter.pressLeft || keyControlCenter.pressUp && keyControlCenter.pressDown) {
+                    spriteNum = 1;
+                }
                 spriteCounter = 0;
             }
+        } else {
+            spriteNum = 1;
         }
     }
 
