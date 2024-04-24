@@ -48,7 +48,7 @@ public class TileManager {
             tile[5].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/tiles/sand.png")));
 
             tile[6] = new Tile();
-            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/tiles/tunnel_road.png")));
+            tile[6].image = ImageIO.read(Objects.requireNonNull(getClass().getResource("/tiles/tunnel_road.jpg")));
 
 
 
